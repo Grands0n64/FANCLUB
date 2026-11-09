@@ -50,14 +50,35 @@ create policy "Active stories are public" on public.stories for select to authen
 drop policy if exists "Members create own stories" on public.stories;
 create policy "Members create own stories" on public.stories for insert to authenticated with check(auth.uid()=user_id and expires_at<=now()+interval '25 hours' and expires_at>now());
 
+-- SECURITY DEFINER membership check avoids querying conversation_members from its own RLS policy.
+create or replace function public.is_fanclub_conversation_member(target_conversation uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = ''
+as $
+ select exists(
+   select 1 from public.conversation_members cm
+   where cm.conversation_id=target_conversation
+     and cm.user_id=(select auth.uid())
+ );
+$;
+revoke all on function public.is_fanclub_conversation_member(uuid) from public;
+grant execute on function public.is_fanclub_conversation_member(uuid) to authenticated;
+
 drop policy if exists "Members view their conversations" on public.conversations;
-create policy "Members view their conversations" on public.conversations for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=id and m.user_id=auth.uid()));
+create policy "Members view their conversations" on public.conversations for select to authenticated
+using(public.is_fanclub_conversation_member(id));
 drop policy if exists "Members view conversation membership" on public.conversation_members;
-create policy "Members view conversation membership" on public.conversation_members for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=public.conversation_members.conversation_id and m.user_id=auth.uid()));
+create policy "Members view conversation membership" on public.conversation_members for select to authenticated
+using(public.is_fanclub_conversation_member(conversation_id));
 drop policy if exists "Conversation members read messages" on public.messages;
-create policy "Conversation members read messages" on public.messages for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=messages.conversation_id and m.user_id=auth.uid()));
+create policy "Conversation members read messages" on public.messages for select to authenticated
+using(public.is_fanclub_conversation_member(conversation_id));
 drop policy if exists "Conversation members send messages" on public.messages;
-create policy "Conversation members send messages" on public.messages for insert to authenticated with check(auth.uid()=sender_id and exists(select 1 from public.conversation_members m where m.conversation_id=messages.conversation_id and m.user_id=auth.uid()));
+create policy "Conversation members send messages" on public.messages for insert to authenticated
+with check(auth.uid()=sender_id and public.is_fanclub_conversation_member(conversation_id));
 drop policy if exists "Users read own notifications" on public.notifications;
 create policy "Users read own notifications" on public.notifications for select to authenticated using(auth.uid()=user_id);
 drop policy if exists "Users update own notifications" on public.notifications;
