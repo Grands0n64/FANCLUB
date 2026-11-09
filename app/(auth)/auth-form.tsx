@@ -21,10 +21,12 @@ export default function AuthForm({ mode }: Props) {
     const supabase = createClient();
     if (!supabase) { setMessage("Supabase is not configured yet. Add the two NEXT_PUBLIC_SUPABASE values in your deployment environment."); return; }
     if (isSignup && !adult) { setMessage("You must confirm that you are 18 or older to continue."); return; }
+    if (isSignup && (!displayName.trim() || displayName.trim().length > 60)) { setMessage("Enter a display name between 1 and 60 characters."); return; }
+    if (isSignup && !/^[A-Za-z0-9_]{3,30}$/.test(username.trim())) { setMessage("Username must be 3–30 letters, numbers or underscores."); return; }
     setBusy(true);
     try {
       if (isSignup) {
-        const { data,error } = await supabase.auth.signUp({ email,password,options:{ data:{ username:username.toLowerCase().trim(), display_name:displayName.trim(), age_declared:true } } });
+        const { data,error } = await supabase.auth.signUp({ email,password,options:{ data:{ username:username.trim().toLowerCase(), display_name:displayName.trim().slice(0,60), age_declared:true } } });
         if (error) throw error;
         setMessage(data.session ? "Your account has been created. Age verification is still required before restricted features are available." : "Check your email to confirm your account. Age verification will still be required.");
       } else {
