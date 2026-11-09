@@ -10,3 +10,32 @@
 .media-picker{display:flex;align-items:center;gap:12px;color:#FF5CC8;font-size:11px;margin:8px 0;cursor:pointer}.media-picker input{max-width:220px;color:#B9A6C2;font-size:10px}.post-media{display:block;width:100%;max-height:520px;object-fit:contain;background:#160B1C;border-radius:9px;margin:12px 0}.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-top:20px}.story-item{background:#160B1C;border:1px solid var(--line);border-radius:10px;padding:9px;overflow:hidden}.story-item strong{font-size:10px}.story-item img,.story-item video{width:100%;height:180px;object-fit:cover;border-radius:7px;margin-top:8px}.notice-row{padding:15px 4px;border-bottom:1px solid var(--line);font-size:12px;color:#ddd}.notice-row.unread{background:#FF5CC810}.notice-row small{display:block;color:#A98EAF;font-size:9px;margin-top:5px}.message-list{margin:16px 0}.message-row{display:block;width:100%;text-align:left;padding:12px;background:#160B1C;border:1px solid var(--line);border-radius:8px;color:#eee;margin:8px 0}.message-row span{font-size:9px;color:#FF5CC8}.message-row p,.message-bubble{font-size:12px;line-height:1.6}.message-bubble{padding:10px;background:#160B1C;border-radius:8px;margin:7px 0}
 
 .live-room-label{display:grid;gap:8px;margin:20px 0;color:#B9A6C2;font-size:11px}.live-room-label input{padding:13px;border:1px solid var(--line);border-radius:8px;background:#160B1C;color:#fff}.live-actions{display:flex;gap:10px;flex-wrap:wrap}.live-secondary{background:#160B1C;color:#FFF5FF;border:1px solid var(--line)}.live-error{color:#ff8b9a;font-size:12px}.fanclub-live-stage{max-width:900px;margin:25px auto;background:#301638;border:1px solid var(--line);border-radius:12px;overflow:hidden}.fanclub-live-bar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:16px}.fanclub-live-bar strong,.fanclub-live-bar small{display:block}.fanclub-live-bar strong{font-size:13px}.fanclub-live-bar small{font-size:10px;color:#B9A6C2;margin-top:5px}.fanclub-live-stage [data-lk-theme]{min-height:65vh}
+
+/* FANCLUB Live experience */
+.fanclub-live-experience{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:14px;padding:14px}
+.fanclub-live-video{position:relative;min-height:420px;background:#08060a;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.fanclub-live-video video{width:100%;height:100%;max-height:70vh;object-fit:contain}
+.fanclub-live-video-head{position:absolute;z-index:3;top:12px;left:12px;right:12px;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:1px;color:#fff;text-shadow:0 1px 4px #000}
+.live-on-dot{width:8px;height:8px;background:#ff405d;border-radius:50%;box-shadow:0 0 12px #ff405d}
+.live-viewer-count{margin-left:auto;background:#0009;padding:7px 10px;border-radius:20px;letter-spacing:0}
+.fanclub-live-camera-empty{color:#B9A6C2;font-size:12px;text-align:center;padding:30px}
+.fanclub-live-video-actions{position:absolute;z-index:4;bottom:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px}
+.fanclub-screen-flash{position:absolute;z-index:2;inset:0;background:#fff;opacity:.82;pointer-events:none;mix-blend-mode:screen}
+.live-device-note{position:absolute;z-index:5;bottom:58px;left:12px;right:12px;background:#000b;padding:8px;border-radius:7px;color:#fff;font-size:10px}
+.fanclub-live-side{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fanclub-live-panel{background:#160B1C;border:1px solid var(--line);border-radius:10px;padding:14px;min-height:170px;display:flex;flex-direction:column}
+.fanclub-live-panel h3{font:700 14px Manrope;margin:0 0 12px}
+.fanclub-live-chat-list{overflow:auto;min-height:130px;max-height:300px;display:flex;flex-direction:column;gap:10px}
+.fanclub-live-chat-message{display:grid;gap:3px;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.fanclub-live-chat-message strong{font-size:10px;color:var(--lime)}
+.fanclub-live-chat-message span{color:#eee}
+.fanclub-live-chat-form{display:flex;gap:7px;margin-top:12px}
+.fanclub-live-chat-form input{min-width:0;flex:1;background:#301638;border:1px solid var(--line);border-radius:7px;padding:10px;color:#fff;font:11px 'DM Sans'}
+.fanclub-gift-placeholder{display:flex;align-items:center;gap:9px;margin-top:auto;padding:10px;background:#301638;border-radius:8px}
+.fanclub-gift-placeholder>span{font-size:23px;color:var(--lime)}
+.fanclub-gift-placeholder>div{flex:1;min-width:0}
+.fanclub-gift-placeholder strong,.fanclub-gift-placeholder small{display:block}
+.fanclub-gift-placeholder strong{font-size:10px}
+.fanclub-gift-placeholder small{font-size:9px;color:#B9A6C2;line-height:1.5;margin-top:4px}
+.fanclub-gift-placeholder button:disabled{opacity:.65;cursor:not-allowed}
+@media(max-width:760px){.fanclub-live-experience{grid-template-columns:1fr;padding:9px}.fanclub-live-video{min-height:340px}.fanclub-live-video video{max-height:58vh}.fanclub-live-chat-list{max-height:220px}}
