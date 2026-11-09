@@ -16,7 +16,9 @@
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.57.0",
     "livekit-client": "^2.15.6",
-    "livekit-server-sdk": "^2.19.2"
+    "livekit-server-sdk": "^2.19.2",
+    "@livekit/components-react": "^2.9.17",
+    "@livekit/components-styles": "^1.1.6"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
