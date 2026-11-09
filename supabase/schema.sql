@@ -58,3 +58,27 @@ grant update (username, display_name, bio, avatar_path) on public.profiles to au
 create policy "Signed-in members can submit reports" on public.reports
 for insert to authenticated
 with check (auth.uid() = reporter_id);
+
+
+-- Social interactions
+create table if not exists public.post_likes (
+  post_id uuid not null references public.posts(id) on delete cascade,
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  primary key(post_id,user_id)
+);
+create table if not exists public.post_comments (
+  id uuid primary key default gen_random_uuid(),
+  post_id uuid not null references public.posts(id) on delete cascade,
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  body text not null check(char_length(body) between 1 and 2000),
+  created_at timestamptz not null default now()
+);
+alter table public.post_likes enable row level security;
+alter table public.post_comments enable row level security;
+create policy "Likes readable on approved public posts" on public.post_likes for select using (exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
+create policy "Members like as themselves" on public.post_likes for insert to authenticated with check(auth.uid()=user_id and exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
+create policy "Members remove own likes" on public.post_likes for delete to authenticated using(auth.uid()=user_id);
+create policy "Comments readable on approved public posts" on public.post_comments for select using(exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
+create policy "Members comment as themselves" on public.post_comments for insert to authenticated with check(auth.uid()=user_id and exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
+create policy "Members delete own comments" on public.post_comments for delete to authenticated using(auth.uid()=user_id);
