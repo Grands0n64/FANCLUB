@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type Profile={id:string;username:string;display_name:string;bio:string;is_creator:boolean;verification:string};
-type Post={id:string;caption:string;created_at:string;creator_id:string;media_path?:string|null;media_type?:"image"|"video"|null;visibility?:"public"|"followers"|"subscribers"|"paid";profiles?:{display_name:string;username:string}|null};
+type Post={id:string;caption:string;created_at:string;creator_id:string;media_path?:string|null;media_type?:"image"|"video"|null;visibility?:"public"|"followers"|"subscribers"|"paid";moderation_status?:"pending"|"approved"|"rejected"|"removed";profiles?:{display_name:string;username:string}|null};
 type Comment={id:string;post_id:string;body:string;created_at:string;profiles?:{display_name:string}|null};
 type Story={id:string;user_id:string;media_path:string;media_type:"image"|"video";created_at:string;profiles?:{username:string;display_name:string}|null};
 type Notification={id:string;kind:string;message:string;created_at:string;read_at:string|null;actor?:{username:string;display_name:string}|null};
