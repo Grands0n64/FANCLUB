@@ -15,6 +15,7 @@ function LiveExperience({ mode, roomName, onLeave }: { mode: "host" | "viewer"; 
   const { chatMessages, send } = useChat();
   const [message, setMessage] = useState("");
   const [torchOn, setTorchOn] = useState(false);
+  const [screenFlash, setScreenFlash] = useState(false);
   const [torchSupported, setTorchSupported] = useState(false);
   const [torchNotice, setTorchNotice] = useState("");
   const [torchBusy, setTorchBusy] = useState(false);
@@ -33,7 +34,7 @@ function LiveExperience({ mode, roomName, onLeave }: { mode: "host" | "viewer"; 
     const mediaTrack = localParticipant.getTrackPublication(Track.Source.Camera)?.track?.mediaStreamTrack;
     if (!mediaTrack) { setTorchNotice("Turn on your camera first."); return; }
     const capabilities = mediaTrack.getCapabilities?.() as MediaTrackCapabilities & { torch?: boolean } | undefined;
-    if (!capabilities?.torch) { setTorchNotice("This camera does not support browser flashlight control. Most front cameras do not have a flash."); return; }
+    if (!capabilities?.torch) { setScreenFlash(value => !value); setTorchNotice("Screen light is being used. Actual camera flash depends on device support."); return; }
     setTorchBusy(true);
     try {
       await mediaTrack.applyConstraints({ advanced: [{ torch: !torchOn } as MediaTrackConstraintSet] });
@@ -52,10 +53,11 @@ function LiveExperience({ mode, roomName, onLeave }: { mode: "host" | "viewer"; 
 
   return <div className="fanclub-live-experience">
     <div className="fanclub-live-video">
-      <div className="fanclub-live-video-head"><span className="live-on-dot" /> LIVE <span className="live-viewer-count">◉ {participants.length} {participants.length === 1 ? "person" : "people"} here</span></div>
+      <div className="fanclub-live-video-head"><span className="live-on-dot" /> LIVE <span className="live-viewer-count">◉ {Math.max(0, participants.length - (mode === "host" ? 1 : 0))} watching</span></div>
       {cameraTracks.length ? cameraTracks.map(track => <VideoTrack key={track.publication.trackSid} trackRef={track} />) : <div className="fanclub-live-camera-empty">{mode === "host" ? "Your camera is starting…" : "Waiting for the creator's video…"}</div>}
+      {screenFlash && <div className="fanclub-screen-flash" aria-label="Screen light enabled" />}
       <div className="fanclub-live-video-actions">
-        {mode === "host" && <button className="button live-secondary small" onClick={() => void toggleTorch()} disabled={torchBusy}>{torchOn ? "Turn flashlight off" : "Flashlight"}</button>}
+        {mode === "host" && <button className="button live-secondary small" onClick={() => void toggleTorch()} disabled={torchBusy}>{torchOn || screenFlash ? "Turn light off" : "Flashlight"}</button>}
         <button className="button small" onClick={onLeave}>{mode === "host" ? "End / leave live" : "Leave live"}</button>
       </div>
       {torchNotice && <p className="live-device-note">{torchNotice}</p>}
