@@ -23,6 +23,17 @@ Fanclub is a global social and creator community for adults aged 18+.
 5. In Supabase SQL Editor, run `supabase/schema.sql`.
 6. Run `npm run dev` and open `http://localhost:3000`.
 
+## Owner access
+After creating your own Fanclub account, grant that account owner moderation access in Supabase SQL Editor (replace the email with the account email you registered with):
+
+```sql
+insert into public.admin_roles (user_id)
+select id from auth.users where email = 'YOUR_LOGIN_EMAIL'
+on conflict (user_id) do nothing;
+```
+
+Then visit `/admin` to review pending public text posts. Never grant admin access to another person unless you trust them with moderation powers.
+
 ## Environment
 - `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase publishable/anon key.
