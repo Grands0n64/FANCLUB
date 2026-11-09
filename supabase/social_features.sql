@@ -53,7 +53,7 @@ create policy "Members create own stories" on public.stories for insert to authe
 drop policy if exists "Members view their conversations" on public.conversations;
 create policy "Members view their conversations" on public.conversations for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=id and m.user_id=auth.uid()));
 drop policy if exists "Members view conversation membership" on public.conversation_members;
-create policy "Members view conversation membership" on public.conversation_members for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=conversation_id and m.user_id=auth.uid()));
+create policy "Members view conversation membership" on public.conversation_members for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=public.conversation_members.conversation_id and m.user_id=auth.uid()));
 drop policy if exists "Conversation members read messages" on public.messages;
 create policy "Conversation members read messages" on public.messages for select to authenticated using(exists(select 1 from public.conversation_members m where m.conversation_id=messages.conversation_id and m.user_id=auth.uid()));
 drop policy if exists "Conversation members send messages" on public.messages;
