@@ -82,3 +82,19 @@ create policy "Members remove own likes" on public.post_likes for delete to auth
 create policy "Comments readable on approved public posts" on public.post_comments for select using(exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
 create policy "Members comment as themselves" on public.post_comments for insert to authenticated with check(auth.uid()=user_id and exists(select 1 from public.posts p where p.id=post_id and p.visibility='public' and p.is_adult=false and p.moderation_status='approved'));
 create policy "Members delete own comments" on public.post_comments for delete to authenticated using(auth.uid()=user_id);
+
+
+-- Owner/admin moderation access. Add the owner's account using the SQL snippet in README.
+create table if not exists public.admin_roles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table public.admin_roles enable row level security;
+create policy "Admins can view their own role" on public.admin_roles
+for select to authenticated using (auth.uid() = user_id);
+create policy "Admins can review posts" on public.posts
+for select to authenticated using (exists(select 1 from public.admin_roles a where a.user_id = auth.uid()));
+create policy "Admins can moderate posts" on public.posts
+for update to authenticated
+using (exists(select 1 from public.admin_roles a where a.user_id = auth.uid()))
+with check (exists(select 1 from public.admin_roles a where a.user_id = auth.uid()));
