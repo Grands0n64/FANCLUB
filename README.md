@@ -2,25 +2,41 @@
 
 **Connect. Create. Earn.**
 
-Fanclub is a global social and creator platform for adults aged 18+ to connect, share content, discover creators and build paid communities.
+Fanclub is a global social and creator community for adults aged 18+.
 
-## Development
-- Next.js App Router, React and TypeScript
-- Supabase foundation (configure your own project)
-- Responsive public landing page and initial account route placeholders
+## Included in this repository
+- Next.js 15 / React 19 / TypeScript application foundation
+- Responsive public landing page
+- Supabase email/password sign-up and login UI
+- Profile creation trigger and member profile editing
+- Signed-in home feed, text posts, discovery search, follow/unfollow and likes
+- Creator workspace placeholder with the planned 80% creator / 20% platform split
+- Verification hierarchy: Noble, Royal, Sovereign and owner-awarded Imperial Elite
+- Supabase schema with row-level security policies
+- GitHub Actions typecheck and production build workflow
 
-Run locally with `npm install` then `npm run dev`.
+## Run locally
+1. Install Node.js 20 or newer.
+2. Run `npm install`.
+3. Copy `.env.example` to `.env.local`.
+4. Add your Supabase project URL and anon key.
+5. In Supabase SQL Editor, run `supabase/schema.sql`.
+6. Run `npm run dev` and open `http://localhost:3000`.
 
-Copy `.env.example` to `.env.local`. Never commit real credentials.
+## Environment
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase publishable/anon key.
+- Never expose the Supabase service-role key in browser code or commit it.
 
-## Planned creator revenue split
-80% creator / 20% platform on eligible creator transactions. Processing fees, refunds and chargebacks must be disclosed separately.
+## Important production gates
+- The age checkbox is only a declaration, not age verification. Adult/restricted features remain disabled until reliable age and identity checks, consent review, moderation and private media authorization are implemented.
+- Payment processing and payouts are not connected. Do not accept real payments until a processor has explicitly approved the business model and supported markets.
+- Calls, livestreams, paid media delivery, creator subscriptions, tips, messaging, admin moderation and the complete creator earnings ledger are not live yet.
+- Vercel Hobby is for personal, non-commercial use; move to an appropriate commercial hosting plan before operating Fanclub as a paid business.
+- Never implement fake followers, bot engagement or fabricated metrics. Promotion must reach real users and report actual results.
 
-## Verification
-- Noble — silver member verification
-- Royal — blue creator verification
-- Sovereign — yellow Master verification
-- Imperial Elite — special owner-awarded status, never sold
+## Creator revenue model
+The planned split is 80% creator / 20% platform on eligible creator sales. Processing fees, refunds and chargebacks must be separately disclosed and handled transparently.
 
-## Production gates
-Authentication, payments, private media, age/identity checks, moderation, messaging, calls and livestreams are not live until their providers and server-side controls are implemented and tested. Public pages must not expose restricted media. Hosting and payment providers must explicitly approve the intended business model.
+## Security
+Access is enforced with Supabase Row Level Security. Verification and creator privileges must only be granted by trusted server/admin workflows, never by client-side profile updates. Keep all secrets in server-side environment variables.
