@@ -39,3 +39,13 @@
 .fanclub-gift-placeholder small{font-size:9px;color:#B9A6C2;line-height:1.5;margin-top:4px}
 .fanclub-gift-placeholder button:disabled{opacity:.65;cursor:not-allowed}
 @media(max-width:760px){.fanclub-live-experience{grid-template-columns:1fr;padding:9px}.fanclub-live-video{min-height:340px}.fanclub-live-video video{max-height:58vh}.fanclub-live-chat-list{max-height:220px}}
+
+
+.profile-open-post{background:#301638;border:1px solid var(--line);border-radius:14px;padding:18px;margin:14px 0}
+.profile-back-button{border:0;background:transparent;color:#FF5CC8;padding:4px 0 16px;font-size:11px;cursor:pointer}
+.profile-open-media{display:block;width:100%;max-height:75vh;object-fit:contain;background:#100914;border-radius:9px;margin:14px 0}
+.profile-open-caption{white-space:pre-wrap;color:#fff;font-size:13px;line-height:1.7;margin:14px 0}
+.profile-post-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 2px;margin:12px 0}
+.profile-post-actions .post-action{font-size:12px}
+.profile-gift-notice{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;margin-top:12px;border:1px solid #FF5CC855;border-radius:8px;color:#fff;font-size:11px}
+.profile-gift-notice button{background:#FF5CC8;border:0;border-radius:6px;padding:7px 12px;color:#160B1C;font-size:10px;font-weight:700}
