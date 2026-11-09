@@ -23,3 +23,38 @@ create policy "Creators create own pending posts" on public.posts for insert to 
 create policy "Creators update own pending posts" on public.posts for update to authenticated using(auth.uid()=creator_id and moderation_status='pending') with check(auth.uid()=creator_id and moderation_status='pending');
 create policy "Users view own subscriptions" on public.subscriptions for select to authenticated using(auth.uid()=subscriber_id or auth.uid()=creator_id);
 -- Financial writes are intentionally server-only: no client insert/update policies are granted.
+
+
+-- Create a profile automatically after a user confirms/creates an auth account.
+create or replace function public.handle_new_fanclub_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  chosen_username text;
+  chosen_name text;
+begin
+  chosen_username := lower(coalesce(new.raw_user_meta_data->>'username', 'member_' || substr(new.id::text,1,8)));
+  chosen_name := coalesce(nullif(trim(new.raw_user_meta_data->>'display_name'),''), 'Fanclub member');
+  insert into public.profiles (id, username, display_name)
+  values (new.id, chosen_username, chosen_name)
+  on conflict (id) do nothing;
+  return new;
+end;
+$$;
+
+drop trigger if exists on_fanclub_auth_user_created on auth.users;
+create trigger on_fanclub_auth_user_created
+after insert on auth.users
+for each row execute procedure public.handle_new_fanclub_user();
+
+-- Members may edit profile presentation, but cannot grant themselves creator or verification privileges.
+revoke insert, update on public.profiles from authenticated;
+grant insert (id, username, display_name, bio, avatar_path) on public.profiles to authenticated;
+grant update (username, display_name, bio, avatar_path) on public.profiles to authenticated;
+
+create policy "Signed-in members can submit reports" on public.reports
+for insert to authenticated
+with check (auth.uid() = reporter_id);
