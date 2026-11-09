@@ -15,6 +15,26 @@ export default function FanclubLive({ displayName }: Props) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [ended, setEnded] = useState(false);
+  const [liveRooms, setLiveRooms] = useState<Array<{roomName:string;participantCount:number;creatorName:string}>>([]);
+  const [roomsLoading, setRoomsLoading] = useState(false);
+  const [roomTitle, setRoomTitle] = useState("");
+
+  async function refreshLiveRooms() {
+    setRoomsLoading(true);
+    try {
+      const { createClient } = await import("@/lib/supabase/client");
+      const supabase = createClient();
+      const { data: { session } } = await supabase?.auth.getSession() || { data: { session: null } };
+      if (!session?.access_token) throw new Error("Please sign in again.");
+      const response = await fetch("/api/livekit/rooms", { headers: { Authorization: "Bearer " + session.access_token }, cache: "no-store" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not load live rooms.");
+      setLiveRooms(data.rooms || []);
+    } catch (e) { setError(e instanceof Error ? e.message : "Could not load live rooms."); }
+    finally { setRoomsLoading(false); }
+  }
+
+  useEffect(() => { void refreshLiveRooms(); const timer = window.setInterval(() => void refreshLiveRooms(), 15000); return () => window.clearInterval(timer); }, []);
 
   async function enterLive(nextMode: "host" | "viewer") {
     const name = roomName.trim();
@@ -31,7 +51,7 @@ export default function FanclubLive({ displayName }: Props) {
       const response = await fetch("/api/livekit/token", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: "Bearer " + session.access_token },
-        body: JSON.stringify({ roomName: name, mode: nextMode }),
+        body: JSON.stringify({ roomName: name, mode: nextMode, title: roomTitle.trim().slice(0,100) }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Unable to join live room.");
