@@ -67,3 +67,40 @@
 .profile-stories-section{margin-top:20px}
 .profile-stories-section .profile-stories-row{margin-top:8px}
 @media(max-width:760px){.home-stories,.profile-stories-section{padding:13px}.home-stories-row,.profile-stories-row{gap:12px}.story-bubble{flex-basis:58px}.story-bubble>span{width:54px;height:54px}}
+
+
+/* FANCLUB creator studio: elegant, romantic creator-first styling */
+.workspace-card:has(.creator-studio-shell){max-width:920px;background:radial-gradient(ellipse at 90% 0%,#7c285b55,transparent 42%),linear-gradient(145deg,#301638,#1d1028 72%);border:1px solid #ff8bd633;box-shadow:0 18px 55px #08030d66}
+.creator-studio-shell .eyebrow{color:#ff9cda;letter-spacing:2px}
+.creator-studio-shell h2{font-family:Georgia,serif;font-weight:500;font-size:30px;color:#fff1fa}
+.creator-studio-shell>p{color:#d8b6d0;font-size:12px;line-height:1.8}
+.creator-studio-shell .profile-edit{background:#160b1c88;border:1px solid #ff8bd622;border-radius:16px;padding:22px}
+.creator-studio-shell .profile-edit label{color:#f6d9eb;font-size:11px;gap:9px}
+.creator-studio-shell .profile-edit input,.creator-studio-shell .profile-edit textarea,.creator-studio-shell .profile-edit select{background:#28132d;border:1px solid #75466e;color:#fff;border-radius:10px;padding:13px}
+.creator-studio-shell .button{background:linear-gradient(110deg,#ff5cc8,#d98aff);color:#260f27;border:0;border-radius:10px;font-weight:800}
+.creator-studio-shell .metric-grid>div{background:#1c1024;border-color:#70405f;border-radius:13px}
+.creator-studio-shell .metric-grid strong{color:#ff9cda}
+.creator-studio-shell h3{font-family:Georgia,serif;color:#ffe5f4;font-size:20px}
+.profile-post-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;width:100%}
+.profile-post-card{min-width:0;background:#24122b;border:1px solid #ffffff0b;border-radius:5px;overflow:visible;position:relative}
+.profile-post-tile{position:relative;width:100%;aspect-ratio:1/1;overflow:hidden;background:#160b1c}
+.profile-post-tile img,.profile-post-tile video{width:100%;height:100%;object-fit:cover;display:block}
+.profile-text-post{display:grid;place-items:center;height:100%;padding:12px;color:#fff;font-size:11px;overflow:hidden}
+.profile-post-caption{font-size:10px;color:#e8d7e9;padding:5px 7px;margin:0;max-height:40px;overflow:hidden}
+.profile-post-actions{display:flex;justify-content:space-around;gap:2px;padding:7px 2px;margin:0;border:0}
+.profile-post-actions .post-action{font-size:10px;padding:4px 3px}
+.post-more-button{position:absolute;right:7px;top:7px;border:0;border-radius:50%;width:30px;height:30px;background:#100817c9;color:white;font-size:22px;line-height:1;cursor:pointer}
+.post-options-menu{position:absolute;z-index:15;right:5px;top:42px;min-width:150px;background:#26132c;border:1px solid #8b527e;border-radius:11px;box-shadow:0 14px 35px #0009;padding:5px;display:grid}
+.post-options-menu button{background:transparent;border:0;color:#fff;text-align:left;padding:10px 12px;border-radius:7px;font-size:11px;cursor:pointer}
+.post-options-menu button:hover{background:#ffffff12}
+.post-options-menu .delete-post-action{color:#ff8eaa}
+.post-pinned-label{position:absolute;left:7px;top:7px;background:#160b1cdd;color:#ffb6e5;border:1px solid #ff8bd655;border-radius:20px;padding:5px 8px;font-size:9px}
+.post-edit-overlay{position:fixed;inset:0;z-index:1000;background:#09040dcc;display:grid;place-items:center;padding:18px}
+.post-edit-modal{width:min(520px,100%);background:#2b1531;border:1px solid #ff8bd655;border-radius:16px;padding:20px;display:grid;gap:14px;box-shadow:0 25px 70px #000b}
+.post-edit-heading{display:flex;justify-content:space-between;align-items:center}
+.post-edit-heading h3{color:#fff;font:500 22px Georgia,serif;margin:0}
+.post-edit-heading button{background:transparent;color:#fff;border:0;font-size:20px}
+.post-edit-modal label{display:grid;gap:8px;color:#f3d9ed;font-size:11px}
+.post-edit-modal textarea,.post-edit-modal input{width:100%;background:#170d1c;border:1px solid #71436b;border-radius:9px;color:#fff;padding:12px}
+.post-edit-modal textarea{min-height:100px}
+@media(max-width:600px){.profile-post-grid{gap:2px}.profile-post-actions .post-action{font-size:9px}.creator-studio-shell .profile-edit{padding:14px}}
