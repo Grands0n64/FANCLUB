@@ -180,3 +180,56 @@
 .profile-viewer-comments input{flex:1;min-width:0;background:#130a19;border:1px solid #ffffff25;border-radius:9px;padding:11px;color:#fff;font-size:12px}
 .profile-viewer-comments form button{border:0;border-radius:9px;background:#ff5cc8;color:#1a0b1c;font-weight:900;padding:0 14px}
 @media(max-width:700px){.profile-cover{min-height:195px;padding:24px 16px}.profile-avatar{width:74px;height:74px;flex-basis:74px;font-size:29px}.profile-identity h2{font-size:26px}.profile-post-grid{gap:5px}.profile-post-viewer{padding:0}.profile-post-viewer-card{width:100%;height:100%;max-height:100vh;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto;border:0;border-radius:0}.profile-viewer-media{min-height:0;max-height:none}.profile-viewer-media img,.profile-viewer-media video{max-height:58vh}.profile-viewer-details{padding:15px 16px calc(16px + env(safe-area-inset-bottom));max-height:42vh}.profile-viewer-actions{margin-top:10px}}
+
+
+/* Compact Instagram-like stories, activity and consistent controls */
+.home-stories,.profile-stories-section{padding:13px 15px;border-radius:12px}
+.home-stories-heading{font-size:12px;margin-bottom:10px}
+.story-bubble{flex-basis:62px;gap:6px}
+.story-bubble>span,.story-ring{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ff5cc8,#a45be8);padding:3px;box-shadow:0 0 0 1px #ffb5e8}
+.story-ring>span,.story-bubble>span{width:100%;height:100%;display:grid;place-items:center;border-radius:50%;border:2px solid #24112b;background:#291331;color:#fff;font-size:17px;font-weight:800}
+.story-bubble small{font-size:9px}
+.story-bubble.own-story>span{outline:0;background:#201027;color:#ff8bd6}
+.story-bubble .story-avatar-add{font-size:25px}
+.stories-page,.activity-page{width:min(100%,760px);margin:8px auto 55px}
+.stories-page-head,.activity-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px}
+.stories-page-head h2,.activity-heading h2{font-size:25px;font-weight:850;margin:5px 0;color:#fff}
+.stories-page-head p,.activity-heading p{font-size:11px;color:#bda8c4;margin:0}
+.story-add-button,.activity-read-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #ff8bd688;background:linear-gradient(120deg,#ff5cc8,#d98aff);color:#210d25;border-radius:8px;padding:9px 13px;font-size:10px;font-weight:850;cursor:pointer;white-space:nowrap}
+.story-add-button input{display:none}
+.stories-people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:10px}
+.story-person-card{display:flex;align-items:center;gap:8px;flex-direction:column;padding:15px 8px;background:#281431;border:1px solid #ffffff13;border-radius:11px;color:#fff;cursor:pointer}
+.story-person-card .story-ring{width:66px;height:66px}
+.story-person-card strong{font-size:11px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.story-person-card small{font-size:9px;color:#bca5c5}
+.story-own-card .story-ring{background:linear-gradient(135deg,#ff5cc8,#a45be8)}
+.story-viewer-backdrop{position:fixed;inset:0;z-index:2200;background:#08040beF;display:grid;place-items:center;padding:12px;backdrop-filter:blur(8px)}
+.story-viewer{width:min(390px,100%);height:min(760px,92vh);background:#100914;border:1px solid #ffffff24;border-radius:15px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 80px #000b}
+.story-viewer-progress{display:flex;gap:4px;padding:10px 10px 4px}
+.story-viewer-progress span{height:3px;flex:1;background:#ffffff45;border-radius:4px}
+.story-viewer-progress span.current{background:#ff78cf}
+.story-viewer-top{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;color:#fff;font-size:11px}
+.story-viewer-top button{border:0;background:transparent;color:#fff;font-size:24px}
+.story-viewer>img,.story-viewer>video{width:100%;min-height:0;flex:1;object-fit:contain;background:#050307}
+.story-viewer-controls{display:flex;justify-content:space-between;padding:10px}
+.story-viewer-controls button{border:1px solid #ffffff2a;border-radius:7px;background:#26132d;color:#fff;padding:8px 12px;font-size:10px}
+.story-viewer-controls button:disabled{opacity:.35}
+.activity-read-button{background:#281431;color:#f8d9ee;border-color:#ffffff24}
+.activity-list{display:grid;gap:7px}
+.activity-item{display:flex;align-items:center;gap:11px;padding:12px;background:#281431;border:1px solid #ffffff12;border-radius:10px}
+.activity-item.unread{border-color:#ff5cc866;background:linear-gradient(100deg,#3b1939,#281431)}
+.activity-avatar{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#ff5cc8,#9658d8);color:#fff;font-size:13px;font-weight:850}
+.activity-copy{min-width:0;flex:1}
+.activity-copy p{font-size:11px;line-height:1.5;color:#f5eaf6;margin:0}
+.activity-copy p strong{color:#fff;font-weight:850}
+.activity-copy small{display:block;color:#a98eaf;font-size:9px;margin-top:4px}
+.activity-type-icon{color:#ff78cf;font-size:17px;font-weight:900}
+.activity-empty{padding:35px 18px;text-align:center;border:1px dashed #ff8bd655;border-radius:12px;color:#c9b3cf;font-size:11px;line-height:1.7}
+.button,.side-link,.post-action,.profile-outline-button,.compose-foot button,.profile-viewer-actions button{transition:background .16s,border-color .16s,color .16s,transform .16s,box-shadow .16s}
+.button{border-radius:8px;box-shadow:0 3px 12px #0002;font-weight:800;letter-spacing:.1px}
+.button:hover,.story-add-button:hover,.activity-read-button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.side-link{border-radius:8px;min-height:38px}
+.side-link.active{box-shadow:inset 3px 0 #ff5cc8;background:#ff5cc81b}
+.post-action{border-radius:7px}
+.post-action:hover{background:#ff5cc81b}
+@media(max-width:600px){.stories-page-head,.activity-heading{align-items:flex-start}.stories-page-head h2,.activity-heading h2{font-size:22px}.stories-people-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.story-person-card{padding:12px 5px}.activity-item{padding:10px;gap:9px}.activity-avatar{width:34px;height:34px;flex-basis:34px}.activity-copy p{font-size:10px}}
