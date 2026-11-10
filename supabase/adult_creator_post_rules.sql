@@ -27,7 +27,7 @@ with check (
       where p.id=auth.uid()
         and p.is_creator=true
         and p.verification is not null
-        and p.verification not in ('none','unverified','pending')
+        and p.verification <> 'none'
     )
   )
 );
