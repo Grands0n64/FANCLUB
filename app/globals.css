@@ -49,3 +49,21 @@
 .profile-post-actions .post-action{font-size:12px}
 .profile-gift-notice{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px;margin-top:12px;border:1px solid #FF5CC855;border-radius:8px;color:#fff;font-size:11px}
 .profile-gift-notice button{background:#FF5CC8;border:0;border-radius:6px;padding:7px 12px;color:#160B1C;font-size:10px;font-weight:700}
+
+
+/* Instagram-inspired FANCLUB home and profile */
+.home-stories,.profile-stories-section{background:#301638;border:1px solid var(--line);border-radius:13px;padding:16px 18px;margin-bottom:18px}
+.home-stories-heading,.profile-stories-heading{display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:12px;margin-bottom:13px}
+.home-stories-heading button,.profile-stories-heading button{border:0;background:transparent;color:#FF5CC8;font-size:10px;cursor:pointer}
+.home-stories-row,.profile-stories-row{display:flex;gap:15px;overflow-x:auto;padding:2px 1px 7px;scrollbar-width:thin}
+.story-bubble{flex:0 0 64px;display:flex;flex-direction:column;align-items:center;gap:7px;border:0;background:transparent;color:#fff;cursor:pointer;padding:0}
+.story-bubble>span{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#FF5CC8,#9C55D9);border:3px solid #301638;outline:2px solid #FF5CC8;color:#fff;font-weight:800;font-size:19px}
+.story-bubble small{max-width:68px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#D9C8DE;font-size:9px}
+.story-bubble.own-story>span{background:#160B1C;outline:1px solid #8D718F;color:#FF5CC8;font-size:25px}
+.feed-section-title{display:flex;align-items:baseline;justify-content:space-between;margin:22px 2px 12px;color:#fff;font-size:12px}
+.feed-section-title span{font-size:9px;color:#A98EAF}
+.profile-own-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.profile-outline-button{border:1px solid #FF5CC8;background:transparent;color:#FF5CC8;border-radius:7px;padding:10px 14px;font-size:10px;cursor:pointer}
+.profile-stories-section{margin-top:20px}
+.profile-stories-section .profile-stories-row{margin-top:8px}
+@media(max-width:760px){.home-stories,.profile-stories-section{padding:13px}.home-stories-row,.profile-stories-row{gap:12px}.story-bubble{flex-basis:58px}.story-bubble>span{width:54px;height:54px}}
