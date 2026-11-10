@@ -367,3 +367,18 @@
 .news-comment-form button{border:0;background:#ff5cc8;color:#210c20;border-radius:20px;padding:0 15px;font-weight:850}
 .news-comment-form button:disabled{opacity:.4}
 @media(max-width:600px){.news-feed-open-card{grid-template-columns:112px minmax(0,1fr);gap:10px}.news-feed-image{width:112px;min-height:112px}.news-post-overlay{padding:0;align-items:flex-end}.news-post-modal{width:100%;max-height:94vh;border-radius:16px 16px 0 0}.news-post-modal-image{max-height:42vh}}
+
+/* FIX: keep long news headlines readable on every screen size. */
+.news-feed-copy h3,
+.news-post-modal-body h2 {
+  font-family: 'DM Sans', sans-serif !important;
+  letter-spacing: 0 !important;
+  word-spacing: normal !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  line-height: 1.5 !important;
+  white-space: normal !important;
+  text-transform: none !important;
+}
+.news-feed-copy h3 { font-size: 13px !important; font-weight: 700 !important; }
+.news-post-modal-body h2 { font-size: 21px !important; font-weight: 800 !important; }
