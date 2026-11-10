@@ -4,6 +4,7 @@ create table if not exists public.meetup_booking_profiles (
   rate_30_min numeric(12,2) not null check (rate_30_min > 0),
   rate_hour numeric(12,2) not null check (rate_hour > 0),
   rate_half_day numeric(12,2) not null check (rate_half_day > 0),
+  rate_overnight numeric(12,2) not null default 200 check (rate_overnight > 0),
   currency text not null default 'USD' check (currency in ('USD','NGN','GBP','EUR')),
   meetup_options text[] not null default array['Coffee meetup','Lunch or dinner','Public event','Creator meet-and-greet','Video call','Photography session'],
   enabled boolean not null default false,
@@ -16,7 +17,7 @@ create table if not exists public.meetup_bookings (
   creator_id uuid not null references public.profiles(id) on delete cascade,
   customer_id uuid not null references public.profiles(id) on delete cascade,
   starts_at timestamptz not null,
-  duration_minutes integer not null check (duration_minutes >= 30 and duration_minutes <= 480 and duration_minutes % 30 = 0),
+  duration_minutes integer not null check (duration_minutes >= 30 and duration_minutes <= 1440 and duration_minutes % 30 = 0),
   meetup_option text not null,
   total_amount numeric(12,2) not null check (total_amount > 0),
   currency text not null check (currency in ('USD','NGN','GBP','EUR')),
@@ -69,7 +70,7 @@ begin
     raise exception 'Choose a future date and time.';
   end if;
   if p_duration_minutes < 30 or p_duration_minutes > 480 or p_duration_minutes % 30 <> 0 then
-    raise exception 'Choose a duration between 30 minutes and 8 hours.';
+    raise exception 'Choose a duration between 30 minutes and 24 hours.';
   end if;
   select * into v_listing
   from public.meetup_booking_profiles
@@ -82,12 +83,17 @@ begin
   end if;
   if p_duration_minutes = 240 then
     v_amount := v_listing.rate_half_day;
+  elsif p_duration_minutes = 720 then
+    v_amount := v_listing.rate_overnight;
   elsif p_duration_minutes < 240 then
     v_amount := floor(p_duration_minutes / 60.0) * v_listing.rate_hour
       + ((p_duration_minutes % 60) / 30) * v_listing.rate_30_min;
-  else
+  elsif p_duration_minutes < 720 then
     v_amount := v_listing.rate_half_day
       + ceil((p_duration_minutes - 240) / 60.0) * v_listing.rate_hour;
+  else
+    v_amount := v_listing.rate_overnight
+      + ceil((p_duration_minutes - 720) / 60.0) * v_listing.rate_hour;
   end if;
   v_code := 'FC-' || upper(substr(replace(gen_random_uuid()::text, '-', ''), 1, 10));
   return query
