@@ -233,3 +233,18 @@
 .post-action{border-radius:7px}
 .post-action:hover{background:#ff5cc81b}
 @media(max-width:600px){.stories-page-head,.activity-heading{align-items:flex-start}.stories-page-head h2,.activity-heading h2{font-size:22px}.stories-people-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.story-person-card{padding:12px 5px}.activity-item{padding:10px;gap:9px}.activity-avatar{width:34px;height:34px;flex-basis:34px}.activity-copy p{font-size:10px}}
+
+
+/* Comments stay in the post, in the feed like Instagram */
+.inline-post-comments{padding:0 13px 7px}
+.inline-post-comment-list{display:grid;gap:6px}
+.inline-post-comment-list p,.profile-comment-list p,.profile-viewer-comments p{font-size:11px;line-height:1.5;color:#f2e8f4;margin:0;overflow-wrap:anywhere}
+.inline-post-comment-list strong,.profile-comment-list strong,.profile-viewer-comments strong{font-weight:850;color:#fff;margin-right:4px}
+.comment-delete-button{border:0;background:transparent;color:#c49abf;font-size:9px;margin-left:8px;padding:2px 4px;cursor:pointer}
+.comment-delete-button:hover{color:#ff78cf}
+.view-comments-button{border:0;background:transparent;color:#b99dbb;padding:6px 0 2px;font-size:10px;cursor:pointer}
+.inline-comment-form{display:flex;align-items:center;gap:8px;padding:8px 12px;border-top:1px solid #ffffff12}
+.inline-comment-form input{flex:1;min-width:0;border:0!important;outline:0;background:transparent!important;color:#fff;font-size:11px;padding:7px 0}
+.inline-comment-form input::placeholder{color:#a991ad}
+.inline-comment-form button{border:0;background:transparent;color:#ff78cf;font-size:10px;font-weight:850;padding:6px;cursor:pointer}
+.inline-comment-form button:disabled{opacity:.4;cursor:default}
