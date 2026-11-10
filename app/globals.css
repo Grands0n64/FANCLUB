@@ -394,3 +394,19 @@
 .news-category-tabs button.active{background:#ff5cc8;color:#160b1c;border-color:#ff5cc8;font-weight:700}
 .news-club-picker{display:flex;align-items:center;gap:12px;margin:8px 0 16px}
 .news-club-picker select{max-width:220px;background:#24132b;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px}
+
+
+/* Instagram-style profile photo controls in account settings */
+.settings-photo-block{display:flex;align-items:center;gap:18px;margin:22px 0 26px;padding:18px;background:#160b1c;border:1px solid #ffffff16;border-radius:12px}
+.settings-photo-wrap{position:relative;width:92px;height:92px;flex:0 0 92px;border-radius:50%;padding:3px;background:linear-gradient(135deg,#ff5cc8,#a45be8)}
+.settings-profile-photo,.settings-profile-placeholder{display:grid;width:100%;height:100%;object-fit:cover;border:3px solid #160b1c;border-radius:50%}
+.settings-profile-placeholder{place-items:center;background:#301638;color:#ff8bd6;font:800 30px Manrope}
+.settings-photo-plus{position:absolute;right:-2px;bottom:0;width:30px;height:30px;display:grid;place-items:center;border:3px solid #160b1c;border-radius:50%;background:#ff5cc8;color:#160b1c;font-size:21px;font-weight:900;cursor:pointer}
+.settings-photo-copy{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+.settings-photo-copy strong{font-size:13px;color:#fff}
+.settings-photo-copy span,.settings-photo-copy small{font-size:10px;line-height:1.5;color:#b9a6c2}
+.settings-photo-link{font-size:11px;font-weight:800;color:#ff75d1;cursor:pointer}
+.settings-hidden-file{display:none!important}
+.settings-story-add{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 24px;padding:14px 15px;background:#160b1c;border:1px solid #ffffff16;border-radius:10px;color:#eee;font-size:11px}
+.settings-story-add label{margin:0!important;padding:9px 13px;border-radius:8px;background:#ff5cc8;color:#160b1c;font-size:10px;font-weight:850;cursor:pointer}
+@media(max-width:600px){.settings-photo-block{padding:14px;gap:14px}.settings-photo-wrap{width:78px;height:78px;flex-basis:78px}.settings-photo-plus{width:28px;height:28px}.settings-story-add{font-size:10px}}
