@@ -388,3 +388,9 @@
 .profile-avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 .fanclub-avatar-image{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
 .profile-photo-preview{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid #ff5cc8}
+
+.news-category-tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0;scrollbar-width:none}
+.news-category-tabs button{flex:0 0 auto;border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:9px 15px;background:#24132b;color:#f7eaf7;font:inherit}
+.news-category-tabs button.active{background:#ff5cc8;color:#160b1c;border-color:#ff5cc8;font-weight:700}
+.news-club-picker{display:flex;align-items:center;gap:12px;margin:8px 0 16px}
+.news-club-picker select{max-width:220px;background:#24132b;color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px}
