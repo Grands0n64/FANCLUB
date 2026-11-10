@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   let feeds: [string, string][] = [];
   if (category === "football") feeds = [["BBC Sport Football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["Sky Sports Football", "https://www.skysports.com/rss/11095"], ["The Guardian Football", "https://www.theguardian.com/football/rss"]];
   else if (category === "transfers") feeds = [["Transfer News", googleNews("football transfer news OR transfer rumours")], ["BBC Sport Football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["Sky Sports Football", "https://www.skysports.com/rss/11095"]];
-  else if (category === "clubs") {
+  else if (category === "adult") feeds = [["Adult Industry News", "https://www.xbiz.com/rss/all.xml"], ["Adult FYI", "https://adultfyi.com/feed.xml"]];\n  else if (category === "clubs") {
     const safe = clubs.find(n => n.toLowerCase() === club.toLowerCase());
     if (!safe) return NextResponse.json({ items: [], updatedAt: new Date().toISOString(), error: "Choose a supported club." }, { headers: { "Cache-Control": "no-store" } });
     feeds = [[safe + " News", googleNews('"' + safe + '" football news')], [safe + " Transfer News", googleNews('"' + safe + '" transfer news')]];
