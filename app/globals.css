@@ -410,3 +410,28 @@
 .settings-story-add{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 24px;padding:14px 15px;background:#160b1c;border:1px solid #ffffff16;border-radius:10px;color:#eee;font-size:11px}
 .settings-story-add label{margin:0!important;padding:9px 13px;border-radius:8px;background:#ff5cc8;color:#160b1c;font-size:10px;font-weight:850;cursor:pointer}
 @media(max-width:600px){.settings-photo-block{padding:14px;gap:14px}.settings-photo-wrap{width:78px;height:78px;flex-basis:78px}.settings-photo-plus{width:28px;height:28px}.settings-story-add{font-size:10px}}
+
+
+/* FANCLUB Discovery: clear search results and accessible profile rows */
+.discover-form{display:flex;gap:10px;width:100%;margin:18px 0 16px}
+.discover-form input{flex:1;min-width:0;background:#160b1c;color:#fff;border:1px solid #ffffff25;border-radius:12px;padding:13px 15px;font:inherit}
+.person-row{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0;border-bottom:1px solid #ffffff14}
+.person-row .avatar{width:44px;height:44px;flex:0 0 44px;display:grid;place-items:center;overflow:hidden;border-radius:50%;background:#51244c;color:#fff;font-weight:800}
+.person-row .avatar img{width:100%;height:100%;object-fit:cover}
+.person-profile-link{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;border:0;background:transparent;color:#fff;text-align:left;cursor:pointer}
+.person-profile-link strong{font-size:14px;overflow-wrap:anywhere}
+.person-profile-link small{font-size:11px;color:#bda8c4}
+.discover-empty{padding:18px 12px;border:1px dashed #ffffff25;border-radius:12px;color:#cbb9cf;font-size:13px;line-height:1.5}
+
+/* News cards use a full-width responsive layout; never squeeze headlines into a narrow column. */
+.news-feed-card{width:100%;min-width:0}
+.news-feed-open-card{display:flex!important;flex-direction:column!important;align-items:stretch!important;width:100%!important;min-width:0!important;gap:0!important;padding:0!important}
+.news-feed-image,.news-feed-placeholder{display:block;width:100%!important;height:auto;min-height:0;max-height:260px;aspect-ratio:16/9;object-fit:cover}
+.news-feed-placeholder{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#51244c,#21102b);color:#ffb7e7}
+.news-feed-copy{display:block!important;width:100%!important;min-width:0!important;padding:14px 16px 16px!important;box-sizing:border-box}
+.news-feed-copy small{display:block;font-size:11px;line-height:1.5}
+.news-feed-copy h3{font-size:clamp(16px,2.2vw,19px)!important;line-height:1.35!important;overflow-wrap:break-word!important}
+.news-feed-copy p{font-size:13px!important;line-height:1.55!important;overflow-wrap:break-word!important}
+.news-feed-copy>span{font-size:12px!important}
+.news-feed-actions{min-height:44px;flex-wrap:wrap}
+@media(max-width:600px){.news-feed-image,.news-feed-placeholder{max-height:220px}.news-feed-copy{padding:12px 13px 14px!important}.news-feed-copy h3{font-size:16px!important}.news-feed-copy p{font-size:12px!important}.person-row .button{flex:0 0 auto}}
