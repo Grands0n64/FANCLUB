@@ -15,8 +15,14 @@ function parse(xml: string, source: string): Story[] {
       const x = block.match(new RegExp("<" + tag + "[^>]*>([\\s\\S]*?)</" + tag + ">", "i"));
       return x ? decode(x[1]) : "";
     };
-    const media = block.match(/<(?:media:content|media:thumbnail|enclosure)[^>]*(?:url|href)="([^"]+)"[^>]*\/?>/i);
-    return { title: get("title"), link: get("link") || ((block.match(/<link[^>]*href="([^"]+)"/i) || [])[1] || ""), source, published: get("pubDate") || get("published"), description: get("description") || get("summary"), image: media?.[1] };
+    const descriptionRaw = (block.match(/<(?:description|summary|content:encoded)[^>]*>([\\s\\S]*?)<\\/(?:description|summary|content:encoded)>/i) || [])[1] || "";
+    const imageCandidates = [
+      ...Array.from(block.matchAll(/<(?:media:content|media:thumbnail|enclosure)[^>]*(?:url|href)=["']([^"']+)["'][^>]*\\/?\\s*>/gi), x => x[1]),
+      ...Array.from(block.matchAll(/<img\\b[^>]*src=["']([^"']+)["']/gi), x => x[1]),
+      ...Array.from(descriptionRaw.matchAll(/<img\\b[^>]*src=["']([^"']+)["']/gi), x => x[1])
+    ];
+    const image = imageCandidates.find(value => /^https?:\\/\\//i.test(value));
+    return { title: get("title"), link: get("link") || ((block.match(/<link[^>]*href=["']([^"']+)["']/i) || [])[1] || ""), source, published: get("pubDate") || get("published"), description: get("description") || get("summary") || decode(descriptionRaw), image };
   }).filter(x => x.title && x.link);
 }
 const clubs = ["Arsenal", "Chelsea", "Liverpool", "Manchester United", "Manchester City", "Tottenham", "Newcastle United", "Real Madrid", "Barcelona", "Atletico Madrid", "Bayern Munich", "Borussia Dortmund", "Paris Saint-Germain", "Juventus", "Inter Milan", "AC Milan", "Napoli"];
@@ -29,13 +35,14 @@ export async function GET(request: NextRequest) {
   const category = (request.nextUrl.searchParams.get("category") || "world").toLowerCase();
   const club = (request.nextUrl.searchParams.get("club") || "").trim();
   let feeds: [string, string][] = [];
-  if (category === "football") feeds = [["BBC Sport Football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["Sky Sports Football", "https://www.skysports.com/rss/11095"], ["The Guardian Football", "https://www.theguardian.com/football/rss"]];
+  if (category === "football") feeds = [["BBC Sport Football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["Sky Sports Football", "https://www.skysports.com/rss/11095"], ["The Guardian Football", "https://www.theguardian.com/football/rss"], ["Club News", googleNews("football news Arsenal Chelsea Liverpool Manchester United Manchester City Tottenham Newcastle Real Madrid Barcelona Atletico Madrid Bayern Munich Borussia Dortmund PSG Juventus Inter Milan AC Milan Napoli")]];
   else if (category === "transfers") feeds = [["Transfer News", googleNews("football transfer news OR transfer rumours")], ["BBC Sport Football", "https://feeds.bbci.co.uk/sport/football/rss.xml"], ["Sky Sports Football", "https://www.skysports.com/rss/11095"]];
   else if (category === "adult") feeds = [["Adult Industry News", "https://www.xbiz.com/rss/all.xml"], ["Adult FYI", "https://adultfyi.com/feed.xml"]];
   else if (category === "clubs") {
     const safe = clubs.find(n => n.toLowerCase() === club.toLowerCase());
-    if (!safe) return NextResponse.json({ items: [], updatedAt: new Date().toISOString(), error: "Choose a supported club." }, { headers: { "Cache-Control": "no-store" } });
-    feeds = [[safe + " News", googleNews('"' + safe + '" football news')], [safe + " Transfer News", googleNews('"' + safe + '" transfer news')]];
+    if (club && club.toLowerCase() !== "all" && !safe) return NextResponse.json({ items: [], updatedAt: new Date().toISOString(), error: "Choose a supported club." }, { headers: { "Cache-Control": "no-store" } });
+    const selectedClubs = safe ? [safe] : clubs;
+    feeds = selectedClubs.map(name => [name + " News", googleNews('"' + name + '" football club news')]);
   } else feeds = [["BBC World", "https://feeds.bbci.co.uk/news/world/rss.xml"], ["The Guardian World", "https://www.theguardian.com/world/rss"]];
   const all = await Promise.all(feeds.map(([source, url]) => readFeed(source, url)));
   const items = all.flat().sort((a, b) => new Date(b.published).getTime() - new Date(a.published).getTime()).filter((x, i, a) => a.findIndex(y => y.link === x.link) === i).slice(0, 30);
