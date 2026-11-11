@@ -12,7 +12,7 @@ function parse(xml: string, source: string): Story[] {
   return Array.from(xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)).slice(0, 30).map(m => {
     const block = m[1];
     const get = (tag: string) => {
-      const x = block.match(new RegExp("<" + tag + "[^>]*>([\\\\s\\\\S]*?)</" + tag + ">", "i"));
+      const x = block.match(new RegExp("<" + tag + "[^>]*>([\\s\\S]*?)</" + tag + ">", "i"));
       return x ? decode(x[1]) : "";
     };
     const descriptionRaw = (block.match(/<(?:description|summary|content:encoded)[^>]*>([\s\S]*?)<\/(?:description|summary|content:encoded)>/i) || [])[1] || "";
