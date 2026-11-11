@@ -12,17 +12,18 @@ function parse(xml: string, source: string): Story[] {
   return Array.from(xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)).slice(0, 30).map(m => {
     const block = m[1];
     const get = (tag: string) => {
-      const x = block.match(new RegExp("<" + tag + "[^>]*>([\\s\\S]*?)</" + tag + ">", "i"));
+      const x = block.match(new RegExp("<" + tag + "[^>]*>([\\\\s\\\\S]*?)</" + tag + ">", "i"));
       return x ? decode(x[1]) : "";
     };
-    const descriptionRaw = (block.match(/<(?:description|summary|content:encoded)[^>]*>([\\s\\S]*?)<\\/(?:description|summary|content:encoded)>/i) || [])[1] || "";
-    const imageCandidates = [
-      ...Array.from(block.matchAll(/<(?:media:content|media:thumbnail|enclosure)[^>]*(?:url|href)=["']([^"']+)["'][^>]*\\/?\\s*>/gi), x => x[1]),
-      ...Array.from(block.matchAll(/<img\\b[^>]*src=["']([^"']+)["']/gi), x => x[1]),
-      ...Array.from(descriptionRaw.matchAll(/<img\\b[^>]*src=["']([^"']+)["']/gi), x => x[1])
+    const descriptionRaw = (block.match(/<(?:description|summary|content:encoded)[^>]*>([\s\S]*?)<\/(?:description|summary|content:encoded)>/i) || [])[1] || "";
+    const candidates = [
+      ...Array.from(block.matchAll(/<(?:media:content|media:thumbnail|enclosure)\b[^>]*(?:url|href)=["']([^"']+)["'][^>]*\/?\s*>/gi), x => x[1]),
+      ...Array.from(block.matchAll(/<img\b[^>]*src=["']([^"']+)["']/gi), x => x[1]),
+      ...Array.from(descriptionRaw.matchAll(/<img\b[^>]*src=["']([^"']+)["']/gi), x => x[1])
     ];
-    const image = imageCandidates.find(value => /^https?:\\/\\//i.test(value));
-    return { title: get("title"), link: get("link") || ((block.match(/<link[^>]*href=["']([^"']+)["']/i) || [])[1] || ""), source, published: get("pubDate") || get("published"), description: get("description") || get("summary") || decode(descriptionRaw), image };
+    const image = candidates.find(value => /^https?:\/\//i.test(value));
+    const link = get("link") || ((block.match(/<link[^>]*href=["']([^"']+)["']/i) || [])[1] || "");
+    return { title: get("title"), link, source, published: get("pubDate") || get("published"), description: get("description") || get("summary") || decode(descriptionRaw), image };
   }).filter(x => x.title && x.link);
 }
 const clubs = ["Arsenal", "Chelsea", "Liverpool", "Manchester United", "Manchester City", "Tottenham", "Newcastle United", "Real Madrid", "Barcelona", "Atletico Madrid", "Bayern Munich", "Borussia Dortmund", "Paris Saint-Germain", "Juventus", "Inter Milan", "AC Milan", "Napoli"];
