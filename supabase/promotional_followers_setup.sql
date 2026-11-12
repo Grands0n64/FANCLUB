@@ -65,7 +65,7 @@ returns trigger
 language plpgsql
 security definer
 set search_path = ''
-as $
+as $$
 declare
   v_is_admin boolean;
 begin
@@ -99,7 +99,7 @@ begin
   new.ends_at := now() + interval '30 days';
   return new;
 end;
-$;
+$$;
 
 drop trigger if exists guard_promotion_campaign on public.promotion_campaigns;
 create trigger guard_promotion_campaign
