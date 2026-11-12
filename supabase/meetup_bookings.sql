@@ -69,7 +69,7 @@ begin
   if p_starts_at <= now() then
     raise exception 'Choose a future date and time.';
   end if;
-  if p_duration_minutes < 30 or p_duration_minutes > 480 or p_duration_minutes % 30 <> 0 then
+  if p_duration_minutes < 30 or p_duration_minutes > 1440 or p_duration_minutes % 30 <> 0 then
     raise exception 'Choose a duration between 30 minutes and 24 hours.';
   end if;
   select * into v_listing
