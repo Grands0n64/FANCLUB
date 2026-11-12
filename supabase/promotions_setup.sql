@@ -44,7 +44,10 @@ alter table public.promotion_campaigns enable row level security;
 drop policy if exists "Creators view own promotion campaigns" on public.promotion_campaigns;
 create policy "Creators view own promotion campaigns" on public.promotion_campaigns
 for select to authenticated using (auth.uid()=creator_id);
-grant select on public.promotion_campaigns to authenticated;
+drop policy if exists "Eligible creators create own campaigns" on public.promotion_campaigns;
+create policy "Eligible creators create own campaigns" on public.promotion_campaigns
+for insert to authenticated with check (auth.uid()=creator_id);
+grant select,insert on public.promotion_campaigns to authenticated;
 
 create table if not exists public.promotion_payments (
   id uuid primary key default gen_random_uuid(),
@@ -176,6 +179,7 @@ language sql stable security definer set search_path='' as $$
     and c.delivered_reach<c.target_reach
     and c.ends_at>now()
     and c.creator_id<>auth.uid()
+    and not exists(select 1 from public.promotion_impressions i where i.campaign_id=c.id and i.viewer_id=auth.uid())
   order by c.created_at asc
   limit 5;
 $$;
