@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { createClient } from "@/lib/supabase/client";\nimport MeetupPaymentCheckout from "@/components/meetup-payment-checkout";
+import { createClient } from "@/lib/supabase/client";
+import MeetupPaymentCheckout from "@/components/meetup-payment-checkout";
 
 type CreatorRate = { user_id:string; rate_30_min:number; rate_hour:number; rate_half_day:number; rate_overnight:number; currency:string; meetup_options:string[]; enabled:boolean; profiles?:{username:string;display_name:string;bio?:string}|null };
 type Booking = { id:string; booking_code:string; creator_id:string; starts_at:string; duration_minutes:number; meetup_option:string; total_amount:number; currency:string; status:string; created_at:string };
