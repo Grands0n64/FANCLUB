@@ -32,10 +32,6 @@ begin
   end loop;
 end $$;
 
-drop policy if exists "FANCLUB owner can view admin roles" on public.admin_roles;
-create policy "FANCLUB owner can view admin roles" on public.admin_roles
-for select to authenticated using (exists(select 1 from public.admin_roles a where a.user_id=auth.uid()));
-
 -- A verified owner may create free campaigns; ordinary members still pay the published rate.
 alter table public.promotion_campaigns drop constraint if exists promotion_campaigns_amount_minor_check;
 alter table public.promotion_campaigns add constraint promotion_campaigns_amount_minor_check check(amount_minor>=0);
