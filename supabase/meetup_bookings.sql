@@ -28,6 +28,8 @@ create table if not exists public.meetup_bookings (
 );
 alter table public.meetup_booking_profiles enable row level security;
 alter table public.meetup_bookings enable row level security;
+grant select, insert, update on public.meetup_booking_profiles to authenticated;
+grant select on public.meetup_bookings to authenticated;
 drop policy if exists "Meetup listings are public" on public.meetup_booking_profiles;
 create policy "Meetup listings are public" on public.meetup_booking_profiles for select using (enabled = true or auth.uid() = user_id);
 drop policy if exists "Creators manage own meetup listing" on public.meetup_booking_profiles;
