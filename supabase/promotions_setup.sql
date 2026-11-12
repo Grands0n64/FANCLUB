@@ -42,8 +42,11 @@ create index if not exists promotion_campaigns_creator_idx
 on public.promotion_campaigns(creator_id,created_at desc);
 alter table public.promotion_campaigns enable row level security;
 drop policy if exists "Creators view own promotion campaigns" on public.promotion_campaigns;
-create policy "Creators view own promotion campaigns" on public.promotion_campaigns
-for select to authenticated using (auth.uid()=creator_id);
+drop policy if exists "Creators and admins view promotion campaigns" on public.promotion_campaigns;
+create policy "Creators and admins view promotion campaigns" on public.promotion_campaigns
+for select to authenticated using (
+  auth.uid()=creator_id or exists(select 1 from public.admin_roles a where a.user_id=auth.uid())
+);
 drop policy if exists "Eligible creators create own campaigns" on public.promotion_campaigns;
 create policy "Eligible creators create own campaigns" on public.promotion_campaigns
 for insert to authenticated with check (auth.uid()=creator_id);
