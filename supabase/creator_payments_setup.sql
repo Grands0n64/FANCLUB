@@ -292,3 +292,54 @@ after update of status on public.creator_payment_submissions
 for each row execute function public.record_fanclub_payment_split();
 
 commit;
+
+
+-- ===== Gift-card privacy: buyer and admin only =====
+-- Creators may see a limited payment-status view, never gift-card codes or evidence.
+begin;
+
+drop policy if exists "Payment parties and admins view submissions" on public.creator_payment_submissions;
+drop policy if exists "Buyers and admins view payment submissions" on public.creator_payment_submissions;
+create policy "Buyers and admins view payment submissions"
+on public.creator_payment_submissions
+for select to authenticated
+using (
+  auth.uid() = buyer_id
+  or exists (select 1 from public.admin_roles a where a.user_id = auth.uid())
+);
+
+create or replace view public.creator_payment_history
+with (security_barrier = true, security_invoker = false)
+as
+select
+  id,
+  creator_id,
+  creator_username,
+  item_type,
+  item_title,
+  amount_minor,
+  currency,
+  payment_method,
+  status,
+  created_at,
+  reviewed_at,
+  creator_share_minor
+from public.creator_payment_submissions
+where creator_id = auth.uid();
+
+grant select on public.creator_payment_history to authenticated;
+
+-- Gift-card photos are readable only by the original payer and FANCLUB admins.
+drop policy if exists "Payment parties and admins read payment evidence" on storage.objects;
+drop policy if exists "Buyers and admins read payment evidence" on storage.objects;
+create policy "Buyers and admins read payment evidence"
+on storage.objects for select to authenticated
+using (
+  bucket_id = 'fanclub-payment-evidence'
+  and (
+    (storage.foldername(name))[1] = auth.uid()::text
+    or exists (select 1 from public.admin_roles a where a.user_id = auth.uid())
+  )
+);
+
+commit;
