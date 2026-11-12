@@ -26,7 +26,9 @@ begin
   end if;
 
   update public.promotion_campaigns
-     set followers_credited_at = now()
+     set followers_credited_at = now(),
+         status = 'completed',
+         completed_at = now()
    where id = new.id
      and followers_credited_at is null
   returning creator_id, target_reach
