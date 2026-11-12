@@ -1,7 +1,8 @@
 "use client";
 import {useState} from "react";
 import {createClient} from "@/lib/supabase/client";
-const BTC_WALLET="1HxpFiB5fpL2oPoxFcPiGB7JcHFauqzs2o";\nconst USDT_BEP20_WALLET="0x6588cd478cf2b229e72fa9c81f983d7922d8a840";
+const BTC_WALLET="1HxpFiB5fpL2oPoxFcPiGB7JcHFauqzs2o";
+const USDT_BEP20_WALLET="0x6588cd478cf2b229e72fa9c81f983d7922d8a840";
 export default function MeetupPaymentCheckout({creatorId,creatorUsername,bookingId,amount,currency}:{creatorId:string;creatorUsername:string;bookingId:string;amount:number;currency:string}){
 const [method,setMethod]=useState("bitcoin");const [reference,setReference]=useState("");const [provider,setProvider]=useState("Amazon");const [code,setCode]=useState("");const [photos,setPhotos]=useState<File[]>([]);const [busy,setBusy]=useState(false);const [notice,setNotice]=useState("");const [paymentId,setPaymentId]=useState("");
  const sb=createClient();
