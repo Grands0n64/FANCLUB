@@ -23,6 +23,12 @@ Fanclub is a global social and creator community for adults aged 18+.
 5. In Supabase SQL Editor, run `supabase/schema.sql`.
 6. Run `npm run dev` and open `http://localhost:3000`.
 
+## Profile promotions
+
+After applying the base schema and creator payment setup, run `supabase/promotions_setup.sql` in Supabase SQL Editor. This adds private self-declared gender eligibility, Royal-or-higher campaign enforcement, $2 per 1,000 genuine member impressions, BTC/USDT manual payment review, campaign delivery and unique signed-in member impression tracking. Campaigns stop when their reach target is met and are excluded from delivery after their 30-day deadline. Owner approval activates a campaign; no payment is auto-confirmed.
+
+Promote is available in the signed-in app only to members who privately select Female and hold Royal, Sovereign or Imperial Elite verification. This is a self-declared eligibility field, not identity verification. Promoted reach is not a guaranteed follower count.
+
 ## Owner access
 After creating your own Fanclub account, grant that account owner moderation access in Supabase SQL Editor (replace the email with the account email you registered with):
 
