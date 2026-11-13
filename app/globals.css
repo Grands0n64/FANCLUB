@@ -504,3 +504,21 @@
 .dm-attachment-preview span{display:inline-flex;align-items:center;gap:8px;max-width:100%;padding:7px 10px;border:1px solid #ffffff20;border-radius:20px;color:#eee;font-size:10px}
 .dm-attachment-preview button{border:0;background:transparent;color:#ff9acb;font-size:17px;cursor:pointer}
 @media(max-width:700px){.dm-more-menu{right:0;top:45px}.dm-message-actions{opacity:1}.dm-compose .dm-attach{flex-basis:36px;width:36px;height:36px}.dm-attachment-preview{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
+
+
+/* FANCLUB DM swipe interactions */
+.dm-chat-swipe{position:relative;overflow:hidden;border-top:1px solid #ffffff0d;touch-action:pan-y}
+.dm-chat-swipe .dm-chat-row{position:relative;z-index:1;transition:transform .2s ease;background:#15121d}
+.dm-chat-swipe.is-swiped .dm-chat-row{transform:translateX(-88px)}
+.dm-chat-swipe .dm-chat-delete{position:absolute;z-index:0;right:0;top:0;bottom:0;width:88px;border:0;background:#d93662;color:#fff;font:800 13px 'DM Sans';}
+.dm-chat-swipe .dm-chat-row{border-top:0}
+.dm-reply-compose{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;background:#26152e;border-top:1px solid #ffffff16;border-left:3px solid #ff5cc8}
+.dm-reply-compose span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.dm-reply-compose strong{font-size:12px;color:#ff9cdb}
+.dm-reply-compose small{font-size:11px;color:#e4d4e8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dm-reply-compose button{border:0;background:transparent;color:#fff;font-size:22px}
+.dm-reply-quote{display:flex;flex-direction:column;gap:3px;margin:-2px -3px 8px;padding:7px 9px;border-left:3px solid #ff9cdb;background:#160d20;border-radius:7px}
+.dm-reply-quote strong{font-size:10px;color:#ff9cdb}
+.dm-reply-quote span{font-size:11px;color:#e8dbea;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.dm-thread .dm-bubble-row{touch-action:pan-y}
+@media(max-width:700px){.dm-chat-swipe .dm-chat-row{min-height:70px}.dm-chat-swipe .dm-chat-delete{width:88px}}
