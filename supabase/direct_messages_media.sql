@@ -36,10 +36,3 @@ using (
       and public.is_fanclub_conversation_member(m.conversation_id)
   )
 );
-
-grant update on public.messages to authenticated;
-drop policy if exists "Members mark messages read" on public.messages;
-create policy "Members mark messages read"
-on public.messages for update to authenticated
-using (public.is_fanclub_conversation_member(conversation_id))
-with check (public.is_fanclub_conversation_member(conversation_id));
