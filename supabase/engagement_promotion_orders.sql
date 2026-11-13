@@ -18,7 +18,7 @@ alter table public.engagement_promotion_orders add constraint engagement_promoti
 alter table public.engagement_promotion_orders add constraint engagement_promotion_orders_status_check
  check (status in ('pending','confirmed','rejected','processing','partially_delivered','completed'));
 create or replace function public.guard_engagement_promotion_order()
-returns trigger language plpgsql security definer set search_path='' as $
+returns trigger language plpgsql security definer set search_path='' as $$
 begin
  if auth.uid() is null or new.buyer_id<>auth.uid() then raise exception 'Sign in to submit your own order.'; end if;
  if new.likes_quantity < 0 or new.comments_quantity < 0 or new.likes_quantity > 10000000 or new.comments_quantity > 10000000 or new.likes_quantity + new.comments_quantity = 0 then
@@ -32,7 +32,7 @@ begin
  if new.payment_method='bitcoin' then new.wallet_snapshot:='1HxpFiB5fpL2oPoxFcPiGB7JcHFauqzs2o'; else new.wallet_snapshot:='0x6588cd478cf2b229e72fa9c81f983d7922d8a840'; end if;
  new.status := 'pending';
  return new;
-end; $;
+end; $$;
 drop trigger if exists guard_engagement_promotion_order on public.engagement_promotion_orders;
 create trigger guard_engagement_promotion_order before insert on public.engagement_promotion_orders for each row execute function public.guard_engagement_promotion_order();
 commit;
@@ -68,7 +68,7 @@ create policy "Admins review engagement orders" on public.engagement_promotion_o
 grant select,insert on public.engagement_promotion_orders to authenticated;
 grant update(status,admin_notes,reviewed_by,reviewed_at) on public.engagement_promotion_orders to authenticated;
 create or replace function public.guard_engagement_promotion_order()
-returns trigger language plpgsql security definer set search_path='' as $$
+returns trigger language plpgsql security definer set search_path='' as $$$
 begin
  if auth.uid() is null or new.buyer_id<>auth.uid() then raise exception 'Sign in to submit your own order.'; end if;
  if new.engagement_type='likes' then new.amount_minor:=100; else new.amount_minor:=200; end if;
