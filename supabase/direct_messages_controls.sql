@@ -105,3 +105,13 @@ create policy "Conversation members read message media" on storage.objects for s
   where m.media_path=name and public.is_fanclub_conversation_member(m.conversation_id)
    and not public.fanclub_dm_is_blocked(auth.uid(),peer.user_id)
  ));
+
+-- A member who is blocked cannot read the blocker’s profile row.
+-- The blocker can still view the blocked member and can unblock them later.
+drop policy if exists "Profiles are viewable" on public.profiles;
+create policy "Profiles are viewable" on public.profiles for select to authenticated
+ using(auth.uid()=id or not exists(
+  select 1 from public.dm_blocks b
+  where b.blocker_id=profiles.id and b.blocked_id=auth.uid()
+ ));
+create policy "Public profiles are viewable by guests" on public.profiles for select to anon using(true);
