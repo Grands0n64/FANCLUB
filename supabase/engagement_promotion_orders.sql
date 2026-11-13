@@ -61,6 +61,8 @@ alter table public.engagement_promotion_orders
   add constraint engagement_promotion_orders_status_check
   check (status in ('pending','confirmed','rejected','processing','partially_delivered','completed','pending_payment_review','approved'));
 
+alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_target_check;
+
 alter table public.engagement_promotion_orders
   add constraint engagement_promotion_orders_target_check
   check (
