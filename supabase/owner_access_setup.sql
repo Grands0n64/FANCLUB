@@ -68,4 +68,40 @@ begin
   return new;
 end; $$;
 
+
+-- Admin-only verification grants by member username.
+create or replace function public.admin_grant_member_verification(
+  p_username text,
+  p_level text
+)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $grant$
+begin
+  if auth.uid() is null or not exists (
+    select 1 from public.admin_roles a where a.user_id = auth.uid()
+  ) then
+    raise exception 'Only FANCLUB admins can grant verification.';
+  end if;
+
+  if p_level not in ('none','noble','royal','sovereign','imperial_elite') then
+    raise exception 'Invalid verification level.';
+  end if;
+
+  update public.profiles
+  set verification = p_level::public.verification_level,
+      updated_at = now()
+  where lower(username) = lower(trim(leading '@' from p_username));
+
+  if not found then
+    raise exception 'No FANCLUB member found with that username.';
+  end if;
+end;
+$grant$;
+
+revoke all on function public.admin_grant_member_verification(text,text) from public;
+grant execute on function public.admin_grant_member_verification(text,text) to authenticated;
+
 commit;
