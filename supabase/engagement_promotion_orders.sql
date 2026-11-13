@@ -122,10 +122,15 @@ begin
   new.engagement_type := case when new.likes_quantity > 0 then 'likes' else 'comments' end;
   new.package_quantity := new.likes_quantity + new.comments_quantity;
   -- amount_minor is cents: $2 per 3,000 likes and $2 per 2,000 comments.
-  new.amount_minor := round(
-    (new.likes_quantity::numeric * 200 / 3000)
-    + (new.comments_quantity::numeric * 200 / 2000)
-  )::integer;
+  if exists (select 1 from public.admin_roles a where a.user_id = auth.uid()) then
+    new.amount_minor := 0;
+    new.transaction_hash := 'ADMIN_FREE';
+  else
+    new.amount_minor := round(
+      (new.likes_quantity::numeric * 200 / 3000)
+      + (new.comments_quantity::numeric * 200 / 2000)
+    )::integer;
+  end if;
   new.currency := 'USD';
   new.display_currency := 'USD';
 
