@@ -522,3 +522,30 @@
 .dm-reply-quote span{font-size:11px;color:#e8dbea;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .dm-thread .dm-bubble-row{touch-action:pan-y}
 @media(max-width:700px){.dm-chat-swipe .dm-chat-row{min-height:70px}.dm-chat-swipe .dm-chat-delete{width:88px}}
+
+
+/* Women-only account center drawer */
+.female-account-menu-trigger{width:42px;height:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid #ffffff24;border-radius:12px;background:#211329;color:#fff;cursor:pointer}
+.female-account-menu-trigger span{display:block;width:19px;height:2px;border-radius:2px;background:#fff}
+.female-account-overlay{position:fixed;inset:0;z-index:150;background:#08050bcc;display:flex;justify-content:flex-end}
+.female-account-drawer{width:min(420px,92vw);height:100%;overflow:auto;background:#1c1024;border-left:1px solid #ffffff20;box-shadow:-20px 0 60px #0008;padding:22px;display:flex;flex-direction:column;gap:18px}
+.female-drawer-head{display:flex;justify-content:space-between;align-items:center;font:800 19px Manrope,sans-serif}
+.female-drawer-head button{border:0;background:transparent;color:#fff;font-size:30px}
+.female-account-drawer nav{display:grid;gap:8px}
+.female-account-drawer nav button{width:100%;text-align:left;padding:15px;border:1px solid #ffffff18;border-radius:12px;background:#ffffff07;color:#fff;font:700 14px Manrope,sans-serif}
+.female-account-drawer nav button.selected{background:#ff5cc822;border-color:#ff5cc8;color:#ff9cdb}
+.female-drawer-content{display:grid;gap:13px}
+.female-drawer-content h2{font:800 23px Manrope,sans-serif;margin:5px 0}
+.female-drawer-content h3{font:800 16px Manrope,sans-serif;margin:15px 0 0}
+.female-drawer-content>p,.female-drawer-content form>p{font-size:13px;line-height:1.55;color:#cbbdd1}
+.female-drawer-content label{display:grid;gap:7px;font-size:13px;font-weight:700}
+.female-drawer-content input,.female-drawer-content textarea{width:100%;min-height:46px;padding:12px;border:1px solid #ffffff24;border-radius:10px;background:#100b17;color:#fff;font:14px Manrope,sans-serif}
+.female-verification-card{display:grid;gap:7px;padding:14px;border:1px solid #ffffff1c;border-radius:12px;background:#ffffff06}
+.female-verification-card strong{font:800 15px Manrope,sans-serif}
+.female-verification-card span,.female-verification-card small{font-size:12px;color:#cbbdd1;line-height:1.45}
+.female-verification-card button{justify-self:start;border:0;border-radius:8px;padding:9px 13px;background:#ff5cc8;color:#210d21;font-weight:800}
+.female-earnings-total{display:grid;gap:8px;padding:18px;border:1px solid #ff5cc855;border-radius:14px;background:#ff5cc811}
+.female-earnings-total span{font-size:12px;color:#cbbdd1}
+.female-earnings-total strong{font-size:23px;color:#ff9cdb}
+.female-account-notice{font-size:12px;line-height:1.5;color:#ffb8e5;padding:12px;border-radius:10px;background:#ff5cc814}
+@media(max-width:700px){.female-account-drawer{width:100%;padding:calc(18px + env(safe-area-inset-top)) 18px calc(20px + env(safe-area-inset-bottom))}.female-account-menu-trigger{width:38px;height:38px}}
