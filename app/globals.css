@@ -484,3 +484,23 @@
  .dm-conversation-open .dm-call-actions{display:none}
  .dm-conversation-open .dm-bubble{max-width:84%}
 }
+
+
+/* FANCLUB DM composer and conversation controls */
+.dm-menu-wrap{position:relative;margin-left:auto}
+.dm-more-button{width:40px;height:40px;border:1px solid #ffffff20;border-radius:50%;background:#ffffff0a;color:#fff;font-size:17px;letter-spacing:2px;cursor:pointer}
+.dm-more-menu,.dm-forward-picker{position:absolute;z-index:20;right:0;top:48px;min-width:190px;padding:7px;background:#26152e;border:1px solid #ffffff22;border-radius:12px;box-shadow:0 14px 40px #0009;display:grid;gap:3px}
+.dm-more-menu button,.dm-forward-picker button{border:0;border-radius:7px;background:transparent;color:#f5eaf7;text-align:left;padding:11px 12px;font:12px 'DM Sans';cursor:pointer}
+.dm-more-menu button:hover,.dm-forward-picker button:hover{background:#ffffff12}
+.dm-thread-search{display:block;width:100%;padding:12px 15px;border:0;border-bottom:1px solid #ffffff18;background:#211329;color:#fff;font:13px 'DM Sans';outline:none}
+.dm-message-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:7px;opacity:.7}
+.dm-message-actions button{border:0;background:transparent;color:#f7b8e7;font-size:10px;padding:2px;cursor:pointer}
+.dm-forward-picker{position:static;min-width:0;margin-top:8px;max-height:180px;overflow:auto}
+.dm-compose .dm-attach{flex:0 0 38px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#ffffff12;color:#fff;font-size:24px;cursor:pointer;position:relative}
+.dm-compose .dm-attach input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.dm-compose .dm-record-button{width:40px;height:40px;border:0;border-radius:50%;background:#ffffff12;color:#fff;cursor:pointer}
+.dm-compose .dm-record-button.recording{background:#e63d64;color:white}
+.dm-attachment-preview{display:flex;gap:7px;flex-wrap:wrap;padding:8px 14px;margin:0;background:#211329;border-top:1px solid #ffffff12}
+.dm-attachment-preview span{display:inline-flex;align-items:center;gap:8px;max-width:100%;padding:7px 10px;border:1px solid #ffffff20;border-radius:20px;color:#eee;font-size:10px}
+.dm-attachment-preview button{border:0;background:transparent;color:#ff9acb;font-size:17px;cursor:pointer}
+@media(max-width:700px){.dm-more-menu{right:0;top:45px}.dm-message-actions{opacity:1}.dm-compose .dm-attach{flex-basis:36px;width:36px;height:36px}.dm-attachment-preview{padding-bottom:calc(8px + env(safe-area-inset-bottom))}}
