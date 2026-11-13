@@ -115,3 +115,18 @@ create policy "Profiles are viewable" on public.profiles for select to authentic
   where b.blocker_id=profiles.id and b.blocked_id=auth.uid()
  ));
 create policy "Public profiles are viewable by guests" on public.profiles for select to anon using(true);
+
+create table if not exists public.dm_pinned_messages (
+ user_id uuid not null references public.profiles(id) on delete cascade,
+ conversation_id uuid not null references public.conversations(id) on delete cascade,
+ message_id uuid not null references public.messages(id) on delete cascade,
+ created_at timestamptz not null default now(),
+ primary key(user_id,message_id)
+);
+alter table public.dm_pinned_messages enable row level security;
+drop policy if exists "Users manage own pinned DM messages" on public.dm_pinned_messages;
+create policy "Users manage own pinned DM messages" on public.dm_pinned_messages
+ for all to authenticated
+ using(auth.uid()=user_id and public.is_fanclub_conversation_member(conversation_id))
+ with check(auth.uid()=user_id and public.is_fanclub_conversation_member(conversation_id));
+grant select,insert,delete on public.dm_pinned_messages to authenticated;
