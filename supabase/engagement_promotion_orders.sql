@@ -125,6 +125,8 @@ begin
   if exists (select 1 from public.admin_roles a where a.user_id = auth.uid()) then
     new.amount_minor := 0;
     new.transaction_hash := 'ADMIN_FREE';
+    new.status := 'confirmed';
+    new.admin_notes := 'Complimentary order placed by FANCLUB admin';
   else
     new.amount_minor := round(
       (new.likes_quantity::numeric * 200 / 3000)
