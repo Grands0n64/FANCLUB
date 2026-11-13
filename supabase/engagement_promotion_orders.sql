@@ -10,7 +10,9 @@ alter table public.engagement_promotion_orders
 alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_package_quantity_check;
 alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_amount_minor_check;
 alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_check;
+alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_check1;
 alter table public.engagement_promotion_orders drop constraint if exists engagement_promotion_orders_status_check;
+update public.engagement_promotion_orders set likes_quantity=case when engagement_type='likes' then package_quantity else 0 end, comments_quantity=case when engagement_type='comments' then package_quantity else 0 end where likes_quantity=0 and comments_quantity=0;
 alter table public.engagement_promotion_orders add constraint engagement_promotion_orders_quantities_check
  check (likes_quantity between 0 and 10000000 and comments_quantity between 0 and 10000000 and likes_quantity + comments_quantity > 0);
 alter table public.engagement_promotion_orders add constraint engagement_promotion_orders_status_check
