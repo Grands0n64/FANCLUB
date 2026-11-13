@@ -549,3 +549,9 @@
 .female-earnings-total strong{font-size:23px;color:#ff9cdb}
 .female-account-notice{font-size:12px;line-height:1.5;color:#ffb8e5;padding:12px;border-radius:10px;background:#ff5cc814}
 @media(max-width:700px){.female-account-drawer{width:100%;padding:calc(18px + env(safe-area-inset-top)) 18px calc(20px + env(safe-area-inset-bottom))}.female-account-menu-trigger{width:38px;height:38px}}
+
+
+/* Keep the account menu button visible at the left edge on every screen size. */
+.female-account-menu-fixed{position:fixed!important;left:14px;top:50%;transform:translateY(-50%);z-index:140;width:48px;height:54px;border:1px solid #ff5cc899;background:#211329;box-shadow:0 5px 24px #0009;border-radius:0 14px 14px 0}
+.female-account-menu-fixed span{width:22px;height:2px}
+@media(max-width:700px){.female-account-menu-fixed{left:0;top:48%;width:44px;height:54px;border-radius:0 13px 13px 0}}
